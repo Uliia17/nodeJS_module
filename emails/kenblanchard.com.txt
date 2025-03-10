@@ -1,0 +1,6 @@
+host.master@kenblanchard.com
+eric.clay@kenblanchard.com
+joe.rivera@kenblanchard.com
+host.master@kenblanchard.com
+eric.clay@kenblanchard.com
+joe.rivera@kenblanchard.com

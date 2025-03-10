@@ -1,0 +1,2 @@
+%spinfile-names.dat%%spinfile-lnames.dat%%random-1-100%@base.mixwi.com
+%spinfile-names.dat%%spinfile-lnames.dat%%random-1-100%@base.mixwi.com

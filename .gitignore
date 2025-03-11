@@ -1,2 +1,5 @@
 .idea/
 nodeJS_module.iml
+package-lock.json
+package.json
+node_modules

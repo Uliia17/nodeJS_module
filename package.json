@@ -1,0 +1,33 @@
+{
+  "name": "nodejs_module",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "rimraf dist && tsc-watch --onSuccess \"npm run watch:server\"",
+    "watch:server": "ts-node src/main.ts --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Uliia17/nodeJS_module.git"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongoose": "^8.12.1",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/mongoose": "^5.11.97",
+    "rimraf": "^6.0.1",
+    "ts-node": "^10.9.2",
+    "tsc-watch": "^6.2.1",
+    "typescript": "^5.8.2"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Uliia17/nodeJS_module/issues"
+  },
+  "homepage": "https://github.com/Uliia17/nodeJS_module#readme",
+  "description": ""
+}

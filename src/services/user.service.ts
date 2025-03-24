@@ -46,6 +46,16 @@ class UserService {
       throw new ApiError("User is not unique", StatusCodesEnum.BAD_REQUEST);
     }
   }
+  public async isActive(id: string): Promise<boolean> {
+    const user = await this.getById(id);
+    return user.isActive;
+  }
+  public blockUser(user_id: string): Promise<IUser> {
+    return userRepository.blockUser(user_id);
+  }
+  public unblockUser(user_id: string): Promise<IUser> {
+    return userRepository.unblockUser(user_id);
+  }
 }
 
 export const userService = new UserService();

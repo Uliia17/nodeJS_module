@@ -10,6 +10,7 @@ interface IUser extends IBase {
   password: string;
   role: RoleEnum;
   isDeleted: boolean;
+  isActive: boolean;
   isVerified: boolean;
 }
 

@@ -1,3 +1,4 @@
+import { templatesConstants } from "../constants/templates.constants";
 import { StatusCodesEnum } from "../enums/status-codes.enum";
 import { ApiError } from "../errors/api.error";
 import { IAuth } from "../interfaces/auth.interface";
@@ -5,6 +6,7 @@ import { ITokenPair } from "../interfaces/token.interface";
 import { IUser, IUserCreateDTO } from "../interfaces/user.interface";
 import { tokenRepository } from "../repositories/token.repository";
 import { userRepository } from "../repositories/user.repository";
+import { emailService } from "./email.service";
 import { passwordService } from "./password.service";
 import { tokenService } from "./token.service";
 import { userService } from "./user.service";
@@ -21,6 +23,12 @@ class AuthService {
       role: newUser.role,
     });
     await tokenRepository.create({ ...tokens, _userId: newUser._id });
+    await emailService.sendEmail(
+      newUser.email,
+      "Welcome",
+      templatesConstants.WELCOME,
+      { name: newUser.name },
+    );
     return { user: newUser, tokens };
   }
 
@@ -31,7 +39,7 @@ class AuthService {
 
     if (!user) {
       throw new ApiError(
-        "Email or password is invalid",
+        "Email or password invalid",
         StatusCodesEnum.UNAUTHORIZED,
       );
     }
@@ -40,6 +48,7 @@ class AuthService {
       dto.password,
       user.password,
     );
+
     if (!user.isActive) {
       throw new ApiError("Account is not active", StatusCodesEnum.FORBIDDEN);
     }
@@ -50,6 +59,7 @@ class AuthService {
         StatusCodesEnum.UNAUTHORIZED,
       );
     }
+
     const tokens = tokenService.generateTokens({
       userId: user._id,
       role: user.role,

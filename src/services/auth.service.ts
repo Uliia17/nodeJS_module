@@ -29,6 +29,13 @@ class AuthService {
       templatesConstants.WELCOME,
       { name: newUser.name },
     );
+
+    await emailService.sendEmail(
+      newUser.email,
+      "Welcome",
+      templatesConstants.WELCOME,
+      { name: newUser.name },
+    );
     return { user: newUser, tokens };
   }
 

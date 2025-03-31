@@ -1,5 +1,5 @@
-.idea
-nodeJS_module.iml
+../.idea
+backend/nodeJS_module.iml
 node_modules
 dist
 .env

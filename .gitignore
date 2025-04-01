@@ -1,5 +1,31 @@
-../.idea
-backend/nodeJS_module.iml
-node_modules
-dist
-.env
+# IDE-файли
+.idea/
+
+# Node.js
+node_modules/
+dist/
+.next/
+
+# Build-файли
+/client/static/js/
+.client/static/css/
+
+# Маніфести
+/client/asset-manifest.json
+/client/manifest.json
+/frontend/public/manifest.json
+
+# Логотипи та фавіконки (якщо стандартні)
+client/favicon.ico
+frontend/public/favicon.ico
+client/logo192.png
+frontend/public/logo192.png
+client/logo512.png
+frontend/public/logo512.png
+
+# Автозгенеровані файли
+/client/robots.txt
+/frontend/public/robots.txt
+
+# Package lock (залишити, якщо npm; видалити, якщо yarn)
+package-lock.json

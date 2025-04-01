@@ -1,19 +1,23 @@
-# IDE-файли
-.idea/
+# Файли налаштувань середовища
+.env
+frontend/.env
 
-# Node.js
+# Залежності Node.js
 node_modules/
+
+# Згенеровані файли збірки
 dist/
+build/
 .next/
 
-# Build-файли
-/client/static/js/
-.client/static/css/
+# Статичні файли клієнта
+client/static/js/
+client/static/css/
 
 # Маніфести
-/client/asset-manifest.json
-/client/manifest.json
-/frontend/public/manifest.json
+client/asset-manifest.json
+client/manifest.json
+frontend/public/manifest.json
 
 # Логотипи та фавіконки (якщо стандартні)
 client/favicon.ico
@@ -24,8 +28,19 @@ client/logo512.png
 frontend/public/logo512.png
 
 # Автозгенеровані файли
-/client/robots.txt
-/frontend/public/robots.txt
+client/robots.txt
+frontend/public/robots.txt
 
-# Package lock (залишити, якщо npm; видалити, якщо yarn)
-package-lock.json
+# Файли журналів та тимчасові файли
+*.log
+npm-debug.log*
+
+# Файли налаштувань IDE
+*.iml
+.idea/
+.vscode/
+
+# Файли кешу
+*.cache
+
+mongo_db/

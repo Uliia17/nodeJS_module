@@ -10,29 +10,29 @@ const router = Router();
 router.get("/", userController.getAll);
 router.get("/:id", commonMiddleware.isIdValidate("id"), userController.getById);
 router.put(
-  "/:id",
-  authMiddleware.checkAccessToken,
-  commonMiddleware.isIdValidate("id"),
-  commonMiddleware.validateBody(UserValidator.update),
-  userController.updateById,
+    "/:id",
+    authMiddleware.checkAccessToken,
+    commonMiddleware.isIdValidate("id"),
+    commonMiddleware.validateBody(UserValidator.update),
+    userController.updateById,
 );
 router.delete(
-  "/:id",
-  authMiddleware.checkAccessToken,
-  commonMiddleware.isIdValidate("id"),
-  userController.deleteById,
+    "/:id",
+    authMiddleware.checkAccessToken,
+    commonMiddleware.isIdValidate("id"),
+    userController.deleteById,
 );
 router.patch(
-  "/:id/block",
-  authMiddleware.checkAccessToken,
-  authMiddleware.isAdmin,
-  userController.blockUser,
+    "/:id/block",
+    authMiddleware.checkAccessToken,
+    authMiddleware.isAdmin,
+    userController.blockUser,
 );
 router.patch(
-  "/:id/unblock",
-  authMiddleware.checkAccessToken,
-  authMiddleware.isAdmin,
-  userController.unblockUser,
+    "/:id/unblock",
+    authMiddleware.checkAccessToken,
+    authMiddleware.isAdmin,
+    userController.unblockUser,
 );
 
 export const userRouter = router;

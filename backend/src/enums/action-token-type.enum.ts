@@ -1,4 +1,4 @@
 export enum ActionTokenTypeEnum {
-  ACTIVATE = "ACTIVATE",
-  RECOVERY = "RECOVERY",
+    ACTIVATE = "activate",
+    RECOVERY = "recovery",
 }

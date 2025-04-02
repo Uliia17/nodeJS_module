@@ -4,57 +4,60 @@ import { IUser, IUserCreateDTO } from "../interfaces/user.interface";
 import { userRepository } from "../repositories/user.repository";
 
 class UserService {
-  public getAll(): Promise<IUser[]> {
-    return userRepository.getAll();
-  }
+    public getAll(): Promise<IUser[]> {
+        return userRepository.getAll();
+    }
 
-  public create(user: IUserCreateDTO): Promise<IUser> {
-    return userRepository.create(user);
-  }
+    public create(user: IUserCreateDTO): Promise<IUser> {
+        return userRepository.create(user);
+    }
 
-  public async getById(userId: string): Promise<IUser> {
-    const user = await userRepository.getById(userId);
-    if (!user) {
-      throw new ApiError("User is not found", StatusCodesEnum.NOT_FOUND);
+    public async getById(userId: string): Promise<IUser> {
+        const user = await userRepository.getById(userId);
+        if (!user) {
+            throw new ApiError("User is not found", StatusCodesEnum.NOT_FOUND);
+        }
+        return user;
     }
-    return user;
-  }
-  public async updateById(
-    userId: string,
-    user: Partial<IUser>,
-  ): Promise<IUser> {
-    const data = await userRepository.getById(userId);
-    if (!data) {
-      throw new ApiError("User is not found", StatusCodesEnum.NOT_FOUND);
+    public async updateById(
+        userId: string,
+        user: Partial<IUser>,
+    ): Promise<IUser> {
+        const data = await userRepository.getById(userId);
+        if (!data) {
+            throw new ApiError("User is not found", StatusCodesEnum.NOT_FOUND);
+        }
+        return await userRepository.updateById(userId, user);
     }
-    return await userRepository.updateById(userId, user);
-  }
-  public async deleteById(userId: string): Promise<void> {
-    const data = await userRepository.getById(userId);
-    if (!data) {
-      throw new ApiError("User is not found", StatusCodesEnum.NOT_FOUND);
+    public async deleteById(userId: string): Promise<void> {
+        const data = await userRepository.getById(userId);
+        if (!data) {
+            throw new ApiError("User is not found", StatusCodesEnum.NOT_FOUND);
+        }
+        await userRepository.deleteById(userId);
     }
-    await userRepository.deleteById(userId);
-  }
-  public async isEmailUnique(email: string): Promise<void> {
-    const user = await userRepository.getByEmail(email);
-    if (user) {
-      throw new ApiError("User is not unique", StatusCodesEnum.BAD_REQUEST);
+    public async isEmailUnique(email: string): Promise<void> {
+        const user = await userRepository.getByEmail(email);
+        if (user) {
+            throw new ApiError(
+                "User is not unique",
+                StatusCodesEnum.BAD_REQUEST,
+            );
+        }
     }
-  }
-  public async isActive(id: string): Promise<boolean> {
-    const user = await this.getById(id);
-    return user.isActive;
-  }
-  public blockUser(user_id: string): Promise<IUser> {
-    return userRepository.blockUser(user_id);
-  }
-  public unblockUser(user_id: string): Promise<IUser> {
-    return userRepository.unblockUser(user_id);
-  }
-  public getByEmail(email: string): Promise<IUser> {
-    return userRepository.getByEmail(email);
-  }
+    public async isActive(id: string): Promise<boolean> {
+        const user = await this.getById(id);
+        return user.isActive;
+    }
+    public blockUser(user_id: string): Promise<IUser> {
+        return userRepository.blockUser(user_id);
+    }
+    public unblockUser(user_id: string): Promise<IUser> {
+        return userRepository.unblockUser(user_id);
+    }
+    public getByEmail(email: string): Promise<IUser> {
+        return userRepository.getByEmail(email);
+    }
 }
 
 export const userService = new UserService();

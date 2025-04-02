@@ -1,4 +1,4 @@
 export interface IBase {
-  createdAt: Date;
-  updatedAt: Date;
+    createdAt: Date;
+    updatedAt: Date;
 }

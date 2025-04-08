@@ -4,6 +4,7 @@ import {IRes} from "../types/respType";
 import { IAuth } from "../interfaces/authinterface";
 import { IUser } from "../interfaces/userinterface";
 import { ITokens } from "../interfaces/tokensinterface";
+
 const _accessToken = 'accessToken'
 const _refreshToken = 'refreshToken'
 const authService = {

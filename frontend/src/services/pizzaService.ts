@@ -10,8 +10,6 @@ const pizzaService = {
     getAll(): IRes<IPizza[]> {
         return apiService.get(urls.pizzas)
     }
-
-
 }
 
 export {

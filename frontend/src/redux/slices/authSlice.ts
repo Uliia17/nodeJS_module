@@ -1,17 +1,18 @@
 import {createAsyncThunk, createSlice, isFulfilled, isRejected} from "@reduxjs/toolkit";
 import { IUser } from "../../interfaces/userinterface";
-import { authService } from "../../services/authService";
 import { IAuth } from "../../interfaces/authinterface";
+import { authService } from "../../services/authService";
 
 interface IState {
-    me: IUser,
-    error: boolean
+    me: IUser | null;
+    error: boolean | null;
 }
 
 const initialState: IState = {
     me: null,
     error: null
 }
+
 
 const login = createAsyncThunk<IUser, { user: IAuth }>(
     'authSlice/login',

@@ -4,7 +4,6 @@ import { PizzasPage } from "./pages/PizzasPage";
 import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
 
-
 const router = createBrowserRouter([{
     path: "", element:<MainLayout/>, children: [
         {index:true, element:<Navigate to={"pizzas"}/>},

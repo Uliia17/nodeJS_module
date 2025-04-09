@@ -3,11 +3,13 @@ import { IPizza } from "../../interfaces/pizzasinterface";
 import { pizzaService } from "../../services/pizzaService";
 
 interface IState{
-    pizzas:IPizza[]
+    pizzas:IPizza[],
+    trigger:boolean
 }
 
 const initialState:IState = {
-    pizzas:[]
+    pizzas:[],
+    trigger:false
 }
 
 const getAll = createAsyncThunk<IPizza[], void>(
@@ -41,4 +43,20 @@ const pizzaSlice = createSlice({
             .addCase(getAll.fulfilled, (state, action) => {
                 state.pizzas =action.payload
             })
+            .addCase(create.fulfilled, (state, action) => {
+                state.trigger = !state.trigger
+            })
 });
+
+const { reducer: pizzaReducer, actions } = pizzaSlice;
+
+const pizzaActions = {
+    ...actions,
+    create,
+    getAll
+}
+
+export {
+    pizzaReducer,
+    pizzaActions
+}

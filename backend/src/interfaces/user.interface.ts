@@ -15,6 +15,13 @@ interface IUser extends IBase {
     isVerified: boolean;
 }
 
+interface IUserQuery {
+    pageSize: number;
+    page: number;
+    search?: string;
+    order?: string;
+}
+
 type IUserCreateDTO = Pick<
     IUser,
     "name" | "surname" | "age" | "email" | "password"
@@ -22,4 +29,4 @@ type IUserCreateDTO = Pick<
 
 type IUserUpdateDTO = Pick<IUser, "name" | "surname" | "age">;
 
-export type { IUser, IUserCreateDTO, IUserUpdateDTO };
+export type { IUser, IUserCreateDTO, IUserQuery, IUserUpdateDTO };

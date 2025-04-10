@@ -3,7 +3,7 @@ import {authService} from "./authService";
 import {urls} from "../constants/urls";
 import router from "../router";
 
-const apiService = axios.create({baseURL: '/api'});
+const apiService = axios.create({baseURL: process.env.REACT_APP_BASE_URL});
 
 let isRefreshing = false
 type IWaitList = () => void

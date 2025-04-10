@@ -36,6 +36,7 @@ class UserController {
             next(e);
         }
     }
+
     public async deleteById(req: Request, res: Response, next: NextFunction) {
         try {
             const { id } = req.params;
@@ -45,6 +46,7 @@ class UserController {
             next(e);
         }
     }
+
     public async blockUser(req: Request, res: Response, next: NextFunction) {
         try {
             const { id: userId } = req.params;
@@ -61,6 +63,7 @@ class UserController {
             next(e);
         }
     }
+
     public async unblockUser(req: Request, res: Response, next: NextFunction) {
         try {
             const { id: userId } = req.params;
@@ -72,6 +75,34 @@ class UserController {
             }
 
             const data = await userService.unblockUser(userId);
+            res.status(StatusCodesEnum.OK).json(data);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    public async uploadAvatar(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { id } = req.params;
+            const user = await userService.getById(id);
+
+            if (!user) {
+                throw new ApiError(
+                    "User not found",
+                    StatusCodesEnum.BAD_REQUEST,
+                );
+            }
+
+            if (!req.file) {
+                throw new ApiError(
+                    "No file uploaded",
+                    StatusCodesEnum.BAD_REQUEST,
+                );
+            }
+
+            const data = await userService.updateById(id, {
+                avatar: req.file.path,
+            });
             res.status(StatusCodesEnum.OK).json(data);
         } catch (e) {
             next(e);

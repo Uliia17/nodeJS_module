@@ -4,8 +4,8 @@ import { IAuth } from "../../interfaces/authinterface";
 import { authService } from "../../services/authService";
 
 interface IState {
-    me: IUser | null;
-    error: boolean | null;
+    me: IUser,
+    error: boolean
 }
 
 const initialState: IState = {
@@ -24,12 +24,11 @@ const login = createAsyncThunk<IUser, { user: IAuth }>(
 
     }
 )
-
 const me = createAsyncThunk<IUser, void>(
     'authSlice/me',
     async (_, {rejectWithValue}) => {
         try {
-            const { data } = await authService.me();
+            const {data} = await authService.me();
             return data
         } catch (e) {
             return rejectWithValue(e)
@@ -37,7 +36,6 @@ const me = createAsyncThunk<IUser, void>(
 
     }
 )
-
 const authSlice = createSlice({
     name: 'authSlice',
     initialState,

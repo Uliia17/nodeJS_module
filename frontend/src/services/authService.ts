@@ -4,7 +4,6 @@ import {IRes} from "../types/respType";
 import { IAuth } from "../interfaces/authinterface";
 import { IUser } from "../interfaces/userinterface";
 import { ITokens } from "../interfaces/tokensinterface";
-
 const _accessToken = 'accessToken'
 const _refreshToken = 'refreshToken'
 const authService = {
@@ -19,23 +18,23 @@ const authService = {
         return me
     },
 
+
     async refresh():Promise<void>{
         const refreshToken = this.getRefreshToken();
-        if (refreshToken) {
-            const { data } = await apiService.post<ITokens>(urls.auth.refresh,
-                {refreshToken});
+
+        if (refreshToken){
+            const {data} = await apiService.post<ITokens>(urls.auth.refresh, {refreshToken});
             this.setTokens(data)
         }
-    },
 
-    deleteTokens():void{
-        localStorage.getItem(_accessToken);
-        localStorage.getItem(_refreshToken);
     },
-
     setTokens({tokens:{accessToken,refreshToken}} :ITokens):void{
         localStorage.setItem(_accessToken, accessToken)
         localStorage.setItem(_refreshToken, refreshToken)
+    },
+    deleteTokens():void{
+        localStorage.removeItem(_accessToken)
+        localStorage.removeItem(_refreshToken)
     },
 
     me():IRes<IUser>{

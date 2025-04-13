@@ -10,17 +10,7 @@ import { userRepository } from "../repositories/user.repository";
 
 class UserService {
     public async getAll(query: IUserQuery): Promise<IPaginatedResponse<IUser>> {
-        const dataFromDB = await userRepository.getAll(query);
-
-        let data, totalItems;
-
-        if (dataFromDB.length) {
-            data = dataFromDB[0].data;
-            totalItems = dataFromDB[0].totalItems;
-        } else {
-            data = [];
-            totalItems = 0;
-        }
+        const [data, totalItems] = await userRepository.getAll(query);
 
         const totalPages = Math.ceil(totalItems / query.pageSize);
 

@@ -8,7 +8,8 @@ import {
 import { User } from "../models/user.model";
 
 class UserRepository {
-    public getAll(query: IUserQuery): Promise<any> {
+    public getAll(query: IUserQuery): Promise<[IUser[], number]> {
+        const skip = query.pageSize * (query.page - 1);
         const filterObject: FilterQuery<IUser> = { isDeleted: false };
 
         if (query.search) {
@@ -17,50 +18,35 @@ class UserRepository {
                 { surname: { $regex: query.search, $options: "i" } },
             ];
         }
-
-        const orderObject = {};
-        if (query.order) {
-            if (query.order.startsWith("-")) {
-                orderObject[query.order.slice(1)] = -1;
-            } else {
-                orderObject[query.order] = 1;
-            }
-        }
-
-        return User.aggregate([
-            {
-                $match: filterObject,
-            },
-            {
-                $sort: orderObject,
-            },
-            {
-                $group: {
-                    _id: null,
-                    totalItems: { $sum: 1 },
-                    data: { $push: "$$ROOT" },
-                },
-            },
-            {
-                $project: { _id: 0 },
-            },
+        return Promise.all([
+            User.find(filterObject)
+                .limit(query.pageSize)
+                .skip(skip)
+                .sort(query.order),
+            User.find(filterObject).countDocuments(),
         ]);
     }
+
     public create(user: IUserCreateDTO): Promise<IUser> {
         return User.create(user);
     }
+
     public getById(userId: string): Promise<IUser> {
         return User.findById(userId);
     }
+
     public updateById(userId: string, user: Partial<IUser>): Promise<IUser> {
         return User.findByIdAndUpdate(userId, user, { new: true });
     }
+
     public deleteById(userId: string): Promise<IUser> {
         return User.findByIdAndDelete(userId);
     }
+
     public getByEmail(email: string): Promise<IUser> {
         return User.findOne({ email });
     }
+
     public blockUser(userId: string): Promise<IUser> {
         return User.findByIdAndUpdate(
             userId,
@@ -68,6 +54,7 @@ class UserRepository {
             { new: true },
         );
     }
+
     public unblockUser(userId: string): Promise<IUser> {
         return User.findByIdAndUpdate(
             userId,

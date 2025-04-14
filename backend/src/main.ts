@@ -1,13 +1,15 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import path from "node:path";
+
 import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 
 import { config } from "./configs/config";
+import { cronsRunner } from "./crons";
 import { ApiError } from "./errors/api.error";
 import { apiRouter } from "./routers/api.router";
-import path from "node:path";
 
 const app = express();
 app.use(express.json());
@@ -48,8 +50,9 @@ const dbConnection = async () => {
 const start = async () => {
     try {
         await dbConnection();
-        app.listen(config.PORT, () => {
+        app.listen(config.PORT, async () => {
             console.log(`Server listening on ${config.PORT}`);
+            await cronsRunner();
         });
     } catch (e) {
         console.log(e);

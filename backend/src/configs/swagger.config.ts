@@ -76,7 +76,7 @@ const swaggerDocument: OpenAPIV3.Document = {
                                                 name: { type: "string" },
                                                 surname: { type: "string" },
                                                 age: { type: "integer" },
-                                                avatart: { type: "string" },
+                                                avatar: { type: "string" },
                                                 isActive: { type: "boolean" },
                                                 isDeleted: { type: "boolean" },
                                                 isVerified: { type: "boolean" },
@@ -157,7 +157,7 @@ const swaggerDocument: OpenAPIV3.Document = {
                                                 name: { type: "string" },
                                                 surname: { type: "string" },
                                                 age: { type: "integer" },
-                                                avatart: { type: "string" },
+                                                avatar: { type: "string" },
                                                 isActive: { type: "boolean" },
                                                 isDeleted: { type: "boolean" },
                                                 isVerified: { type: "boolean" },
@@ -175,6 +175,210 @@ const swaggerDocument: OpenAPIV3.Document = {
                                                 },
                                             },
                                         },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+        "/auth/refresh": {
+            post: {
+                tags: ["Auth"],
+                summary: "Refresh tokens",
+                requestBody: {
+                    required: true,
+                    content: {
+                        "application/json": {
+                            schema: {
+                                type: "object",
+                                properties: {
+                                    refreshToken: {
+                                        type: "string",
+                                        format: "refreshToken",
+                                    },
+                                },
+                                required: ["refreshToken"],
+                            },
+                        },
+                    },
+                },
+                responses: {
+                    "200": {
+                        description: "Tokens successfully updated",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    properties: {
+                                        tokens: {
+                                            type: "object",
+                                            properties: {
+                                                accessToken: { type: "string" },
+                                                refreshToken: {
+                                                    type: "string",
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+        "/auth/activate/{token}": {
+            patch: {
+                tags: ["Auth"],
+                summary: "Activate user account",
+                parameters: [
+                    {
+                        name: "token",
+                        in: "path",
+                        required: true,
+                        schema: {
+                            type: "string",
+                        },
+                        description:
+                            "The activation token sent to the user's email. It is used to verify the user's email address and activate their account.",
+                    },
+                ],
+                responses: {
+                    "200": {
+                        description: "User account successfully activated",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    properties: {
+                                        email: { type: "string" },
+                                        role: { type: "string" },
+                                        name: { type: "string" },
+                                        surname: { type: "string" },
+                                        age: { type: "integer" },
+                                        avatar: { type: "string" },
+                                        isActive: { type: "boolean" },
+                                        isDeleted: { type: "boolean" },
+                                        isVerified: { type: "boolean" },
+                                        _id: { type: "string" },
+                                        createdAt: { type: "string" },
+                                        updatedAt: { type: "string" },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+        "/auth/me": {
+            get: {
+                tags: ["Auth"],
+                summary: "Get current authenticated user",
+                security: [{ bearerAuth: [] }],
+                responses: {
+                    "200": {
+                        description:
+                            "Successfully get current authenticated user",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    properties: {
+                                        email: { type: "string" },
+                                        role: { type: "string" },
+                                        name: { type: "string" },
+                                        surname: { type: "string" },
+                                        age: { type: "integer" },
+                                        avatar: { type: "string" },
+                                        isActive: { type: "boolean" },
+                                        isDeleted: { type: "boolean" },
+                                        isVerified: { type: "boolean" },
+                                        _id: { type: "string" },
+                                        createdAt: { type: "string" },
+                                        updatedAt: { type: "string" },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+        "/auth/recovery": {
+            post: {
+                tags: ["Auth"],
+                summary: "Request password recovery email",
+                requestBody: {
+                    required: true,
+                    content: {
+                        "application/json": {
+                            schema: {
+                                type: "object",
+                                properties: {
+                                    email: { type: "string", format: "email" },
+                                },
+                                required: ["email"],
+                            },
+                        },
+                    },
+                },
+                responses: {
+                    "200": {
+                        description:
+                            "Password recovery email sent successfully",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    properties: {
+                                        details: { type: "string" },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+        "/auth/recovery/{token}": {
+            post: {
+                tags: ["Auth"],
+                summary: "Complete password recovery using token",
+                parameters: [
+                    {
+                        name: "token",
+                        in: "path",
+                        required: true,
+                        schema: {
+                            type: "string",
+                        },
+                        description:
+                            "The recovery token sent to the user's email. It is used to verify the user's identity for password reset.",
+                    },
+                ],
+                responses: {
+                    "200": {
+                        description: "Password recovery successfully completed",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    properties: {
+                                        email: { type: "string" },
+                                        role: { type: "string" },
+                                        name: { type: "string" },
+                                        surname: { type: "string" },
+                                        age: { type: "integer" },
+                                        avatar: { type: "string" },
+                                        isActive: { type: "boolean" },
+                                        isDeleted: { type: "boolean" },
+                                        isVerified: { type: "boolean" },
+                                        _id: { type: "string" },
+                                        createdAt: { type: "string" },
+                                        updatedAt: { type: "string" },
                                     },
                                 },
                             },
@@ -276,7 +480,7 @@ const swaggerDocument: OpenAPIV3.Document = {
                                         name: { type: "string" },
                                         surname: { type: "string" },
                                         age: { type: "integer" },
-                                        avatart: { type: "string" },
+                                        avatar: { type: "string" },
                                         isActive: { type: "boolean" },
                                         isDeleted: { type: "boolean" },
                                         isVerified: { type: "boolean" },

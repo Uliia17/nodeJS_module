@@ -260,6 +260,40 @@ const swaggerDocument: OpenAPIV3.Document = {
                             },
                         },
                     },
+                    "400": {
+                        description: "Bad request",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    properties: {
+                                        status: {
+                                            type: "integer",
+                                            default: 400,
+                                        },
+                                        message: { type: "string" },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    "401": {
+                        description: "Unauthorized",
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    properties: {
+                                        status: {
+                                            type: "integer",
+                                            default: 401,
+                                        },
+                                        message: { type: "string" },
+                                    },
+                                },
+                            },
+                        },
+                    },
                 },
             },
         },
